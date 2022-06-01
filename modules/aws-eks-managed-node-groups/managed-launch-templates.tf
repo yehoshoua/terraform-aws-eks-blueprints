@@ -54,7 +54,6 @@ resource "aws_launch_template" "managed_node_groups" {
   }
 
   depends_on = [
-    aws_iam_role.managed_ng,
     aws_iam_role_policy_attachment.managed_ng
   ]
 }

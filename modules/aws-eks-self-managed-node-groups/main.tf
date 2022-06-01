@@ -25,8 +25,6 @@ resource "aws_autoscaling_group" "self_managed_ng" {
   }
 
   depends_on = [
-    aws_iam_role.self_managed_ng,
-    aws_iam_instance_profile.self_managed_ng,
     aws_iam_role_policy_attachment.self_managed_ng
   ]
 }

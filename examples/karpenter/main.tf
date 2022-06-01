@@ -112,8 +112,6 @@ module "eks_blueprints_kubernetes_addons" {
   enable_karpenter = true
 
   tags = local.tags
-
-  depends_on = [module.eks_blueprints.self_managed_node_groups]
 }
 
 # Creates Launch templates for Karpenter
@@ -177,7 +175,10 @@ resource "kubectl_manifest" "karpenter_provisioner" {
   for_each  = toset(data.kubectl_path_documents.karpenter_provisioners.documents)
   yaml_body = each.value
 
-  depends_on = [module.eks_blueprints_kubernetes_addons]
+  depends_on = [
+    # Karpenter helm chart needs to be deployed before the provisioner
+    module.eks_blueprints_kubernetes_addons
+  ]
 }
 
 #---------------------------------------------------------------

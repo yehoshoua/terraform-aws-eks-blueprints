@@ -108,11 +108,6 @@ module "eks_blueprints_kubernetes_addons" {
   amazon_prometheus_workspace_endpoint = module.eks_blueprints.amazon_prometheus_workspace_endpoint
 
   tags = local.tags
-
-  depends_on = [
-    module.eks_blueprints.managed_node_groups,
-    module.vpc
-  ]
 }
 
 #---------------------------------------------------------------
@@ -182,10 +177,6 @@ resource "aws_elasticsearch_domain" "opensearch" {
     subnet_ids         = module.vpc.public_subnets
     security_group_ids = [aws_security_group.opensearch_access.id]
   }
-
-  depends_on = [
-    aws_iam_service_linked_role.opensearch
-  ]
 
   tags = local.tags
 }

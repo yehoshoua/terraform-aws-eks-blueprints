@@ -51,7 +51,7 @@ module "eks_blueprints" {
 
   #                 var.cluster_name is for Terratest
   cluster_name    = coalesce(var.cluster_name, local.name)
-  cluster_version = "1.21"
+  cluster_version = "1.22"
 
   vpc_id             = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnets
@@ -82,13 +82,11 @@ module "eks_blueprints_kubernetes_addons" {
   enable_amazon_eks_kube_proxy = true
 
   # Add-ons
-  enable_aws_load_balancer_controller = true
-  enable_metrics_server               = true
-  enable_cluster_autoscaler           = true
-  enable_aws_cloudwatch_metrics       = true
+  enable_metrics_server         = true
+  enable_cluster_autoscaler     = true
+  enable_aws_cloudwatch_metrics = true
 
   tags = local.tags
-
 }
 
 #---------------------------------------------------------------
