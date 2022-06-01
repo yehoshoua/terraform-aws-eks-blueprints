@@ -1,5 +1,6 @@
 resource "helm_release" "addon" {
-  count                      = var.manage_via_gitops ? 0 : 1
+  count = var.manage_via_gitops ? 0 : 1
+
   name                       = var.helm_config["name"]
   repository                 = var.helm_config["repository"]
   chart                      = var.helm_config["chart"]
@@ -59,8 +60,10 @@ resource "helm_release" "addon" {
 }
 
 module "irsa" {
-  count                             = var.irsa_config != null ? 1 : 0
-  source                            = "../../irsa"
+  count = var.irsa_config != null ? 1 : 0
+
+  source = "../../irsa"
+
   create_kubernetes_namespace       = try(var.irsa_config.create_kubernetes_namespace, true)
   create_kubernetes_service_account = try(var.irsa_config.create_kubernetes_service_account, true)
   kubernetes_namespace              = var.irsa_config.kubernetes_namespace
